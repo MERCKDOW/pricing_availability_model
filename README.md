@@ -1,6 +1,8 @@
 # Pricing Availability Model
 
 
+# Discount on Revenue
+
 | Discount Bin | Avg Effect on Revenue (per discount) | 95% CI (Revenue) | Profit Effect (30% margin) |
 |--------------|---------------------------------------|---------------------------|-----------------------------|
 | 1–10% | +21.4 | [-1,958 , 2,682] | +6.4 |
@@ -13,3 +15,16 @@
 | 71–80% | -7.1 | [-237,668 , 56,596] | -2.1 |
 | 81–90% | +283.5 | [-84,407 , 111,588] | +85.1 |
 | 90–99% | +353.9 | [-151,516 , 440,422] | +106.2 |
+
+
+
+# Availability on Revenue
+
+
+
+|availability| AVG Effect on Revenue (for availbility)| 95% CI (Revenue) |
+| --------------------------|------------------------------------|-----------------------------|
+|check_cart_for_availability| -26.514 | [-45,004.733, 2,176.461]
+|estimated_to_ship_on       | -1.003 | [-3,871.206, 1,110.290]
+|available_to_ship_on       | 19.856 | [-325.305, 1,085.819] 
+|in_stock                   | 27.782 | [-524.868, 1,504.689]
