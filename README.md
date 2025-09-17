@@ -1,7 +1,8 @@
-# Pricing Availability Model
+# Pricing Availability Model #
 
+* see src/python_notebooks/econML_pricing_availability.ipynb for work 
 
-# Discount on Revenue
+### Discount on Revenue ###
 
 | Discount Bin | Avg Effect on Revenue (per discount) | 95% CI (Revenue) | Profit Effect (30% margin) |
 |--------------|---------------------------------------|---------------------------|-----------------------------|
@@ -18,7 +19,7 @@
 
 
 
-# Availability on Revenue
+### Availability on Revenue ###
 
 
 
