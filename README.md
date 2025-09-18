@@ -29,3 +29,35 @@
 |estimated_to_ship_on       | -1.003 | [-3,871.206, 1,110.290]
 |available_to_ship_on       | 19.856 | [-325.305, 1,085.819] 
 |in_stock                   | 27.782 | [-524.868, 1,504.689]
+
+
+
+## Lift vs Discount 11 to 20 %
+
+<img src="src/lift_11to20.png" alt="Sample Image" width="1200"/>
+
+## Description Lift vs Discount for values of In Stock (color coded)
+
+
+## Lift vs Discount 21 to 30 %
+
+<img src="src/lift_21to30.png" alt="Sample Image" width="1200"/>
+
+## Description Lift vs Discount for values of In Stock (color coded)
+
+
+## Lift vs Discount 31 to 40 %
+
+<img src="src/lift_31to40.png" alt="Sample Image" width="1200"/>
+
+## Description Lift vs Discount for values of In Stock (color coded)
+
+
+
+
+
+
+
+
+
+
