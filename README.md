@@ -78,5 +78,118 @@
 
 
 
+---
+# Causal Uplift & Multi‑Bin Reallocation — Equations
 
+### Notation
+
+- $X \in \mathbb{R}^p$: feature vector (no treatment columns in $X$).
+- $T \in \{0,1,\dots,K-1\}$: discrete treatment / lead‑time bin. Baseline is $t_0 = 0$.
+- $Y \in \mathbb{R}$: outcome (e.g., revenue).
+- $\hat{\mu}_t(x) \approx \mathbb{E}[Y \mid X=x, T=t]$, $\hat{e}_t(x) \approx \Pr(T=t \mid X=x)$.
+- $\widehat{\tau}(x; t, t_0)$: uplift of $t$ vs $t_0$.
+
+---
+
+## 1) Conditional Effect (Uplift) per Sample (DR framework)
+
+$$
+\tau(x; t, t_0)
+= \mathbb{E}[Y \mid X=x, T=t] - \mathbb{E}[Y \mid X=x, T=t_0].
+$$
+
+(Doubly‑robust score, conceptually used by DRLearner)
+
+$$ \widehat{\tau}(x; t, t_0) = \big(\hat{\mu}t(x) - \hat{\mu}{t_0}(x)\big)
+\frac{\mathbf{1}{T=t} - \hat{e}_t(x)}{\hat{e}_t(x)} \big(Y - \hat{\mu}_t(X)\big)
+\frac{\mathbf{1}{T=t_0} - \hat{e}{t_0}(x)}{\hat{e}{t_0}(x)} \big(Y - \hat{\mu}_{t_0}(X)\big). $$
+
+
+
+
+
+
+
+---
+
+## 2) Average Uplift per Non‑Baseline Bin
+
+$$
+\text{AvgUplift}(t) = \frac{1}{n} \sum_{i=1}^{n} \widehat{\tau}(x_i; \, t, \, t_0),
+\quad \text{for } t \in \{1,\dots,K-1\}.
+$$
+
+---
+
+## 3) Expected Outcome (Revenue) per Bin
+
+Two equivalent ways (averaged over the evaluation covariates $X_{\text{test}}$):
+
+**(a) Direct (T‑learner style):**
+
+$$
+\hat{\mu}_t = \frac{1}{n} \sum_{i=1}^{n} \hat{\mu}_t(x_i).
+$$
+
+**(b) Baseline + uplift reconstruction:**
+
+$$
+\hat{\mu}_t \approx \frac{1}{n} \sum_{i=1}^{n} \Big(\hat{\mu}_{t_0}(x_i) + \widehat{\tau}(x_i; t, t_0)\Big).
+$$
+
+---
+
+## 4) Observed Allocation & Revenue (Test Split)
+
+Let the observed allocation share be:
+
+$$
+\alpha_t = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}\{T_i = t\}, \qquad \sum_{t=0}^{K-1} \alpha_t = 1.
+$$
+
+Then the implied **observed‑mix revenue** is:
+
+$$
+\text{Revenue}_{\text{observed}} = \sum_{t=0}^{K-1} \alpha_t \cdot \hat{\mu}_t.
+$$
+
+
+
+## 5) Multi‑Bin Partial Reallocation (Simulation)
+
+Shift plan:
+
+$$
+shift\_plan = \{ f \mapsto \{ t \mapsto \phi_{f\to t} \} \}, \qquad \sum_{t} \phi_{f\to t} \le 1,\; \phi_{f\to t} \in [0,1].
+$$
+
+Moved mass:
+
+$$
+\Delta_{f \to t} = \alpha_f \cdot \phi_{f\to t}.
+$$
+
+New allocation:
+
+$$
+\alpha_f' = \alpha_f - \sum_{t} \Delta_{f \to t}, \qquad \alpha_t' = \alpha_t + \sum_{f} \Delta_{f \to t}.
+$$
+
+(Optionally clip tiny negatives to 0 and renormalize $\sum_t \alpha_t' = 1$.)
+
+New revenue:
+
+$$
+\text{Revenue}_{\text{new}} = \sum_{t=0}^{K-1} \alpha_t' \cdot \hat{\mu}_t, \qquad \Delta \text{Revenue} = \text{Revenue}_{\text{new}} - \text{Revenue}_{\text{observed}}.
+$$
+
+---
+
+## 6) Binary Outcome Variant (e.g., Purchase Probability)
+
+Define $Y^{(b)} = \mathbf{1}\{Y>0\}$. For two bins $t_0, t_1$, the expected probability lift is:
+
+$$
+\Delta P(t_1 \leftarrow t_0) = \mathbb{E}[\Pr(Y^{(b)}=1 \mid do(T=t_1), X)] - \mathbb{E}[\Pr(Y^{(b)}=1 \mid do(T=t_0), X)] \approx \frac{1}{n}\sum_{i=1}^{n} \widehat{\tau}(x_i; t_1, t_0).
+$$
 
