@@ -193,3 +193,33 @@ $$
 \Delta P(t_1 \leftarrow t_0) = \mathbb{E}[\Pr(Y^{(b)}=1 \mid do(T=t_1), X)] - \mathbb{E}[\Pr(Y^{(b)}=1 \mid do(T=t_0), X)] \approx \frac{1}{n}\sum_{i=1}^{n} \widehat{\tau}(x_i; t_1, t_0).
 $$
 
+## A)
+$$
+\hat{m}(X) \approx \mathbb{E}[Y \mid X],
+\qquad
+\hat{e}(X) \approx \mathbb{E}[T \mid X]
+$$
+
+
+## B)
+$$
+\tilde{Y} = Y - \hat{m}(X), \qquad
+\tilde{T} = T - \hat{e}(X)
+$$
+
+
+
+```mermaid
+flowchart TD
+
+A[Raw data: Y, T, X_all] --> B[Select treatment T_i and outcome Y]
+  B --> C[Define X = X_all minus T_i and Y]
+  C --> D1[Fit model_y: Y vs X to get Y_hat]
+  C --> D2[Fit model_t: T vs X to get T_hat]
+  D1 --> E1[Residualize Y: Y_tilde = Y - Y_hat]
+  D2 --> E2[Residualize T: T_tilde = T - T_hat]
+  E1 --> F[Causal forest: regress Y_tilde on T_tilde with X]
+  E2 --> F
+  F --> G[Output: tau_hat per row = te_pred, ATE = mean te_pred ]
+
+
