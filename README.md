@@ -207,7 +207,16 @@ $$
 \tilde{T} = T - \hat{e}(X)
 $$
 
+## C)
+$$
+\mathbb{E}\Big[(Y - \hat{m}(X) - \tau (T - \hat{e}(X))) (T - \hat{e}(X))\Big] = 0
+$$
 
+## D)
+$$
+\tau = \frac{\mathbb{E}[(Y - \hat{m}(X))(T - \hat{e}(X))]}
+            {\mathbb{E}[(T - \hat{e}(X))^2]}
+$$
 
 ```mermaid
 flowchart TD
