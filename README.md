@@ -218,6 +218,15 @@ $$
             {\mathbb{E}[(T - \hat{e}(X))^2]}
 $$
 
+## E)
+$$
+\hat{\tau}(X_i) \approx \text{te{pred}}[i], \qquad
+\widehat{\text{ATE}} = \frac{1}{n}\sum{i=1}^n \hat{\tau}(X_i)
+$$
+
+
+
+
 ```mermaid
 flowchart TD
 
